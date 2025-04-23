@@ -1,0 +1,75 @@
+http:
+  middlewares:
+    # Global security headers
+    security-headers:
+      headers:
+        frameDeny: true
+        sslRedirect: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 15552000
+        customFrameOptionsValue: SAMEORIGIN
+    
+    # CORS middleware for API endpoints
+    cors-headers:
+      headers:
+        accessControlAllowMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - PATCH
+          - OPTIONS
+        accessControlAllowHeaders:
+          - Authorization
+          - Content-Type
+          - Origin
+        accessControlAllowOriginList:
+          - "https://admin.${HOST_DOMAIN:-localhost}"
+          - "https://${HOST_DOMAIN:-localhost}"
+        accessControlMaxAge: 100
+        addVaryHeader: true
+
+    # Basic auth for admin interfaces
+    admin-auth:
+      basicAuth:
+        users:
+          - "${ADMIN_USER:-admin}:${ADMIN_PASSWORD_HASH:-$$apr1$$tZ8so14Y$$0kzh5YwGCdTUzWJHTRdXm1}"
+
+  # TLS configuration
+  routers:
+    # Default catch-all route to the dashboard/admin UI
+    default:
+      rule: "HostRegexp(`{host:.*}`)"
+      service: admin
+      priority: 1
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: sparkbaas
+
+    # Platform status page
+    status:
+      rule: "Host(`status.${HOST_DOMAIN:-localhost}`)"
+      service: status
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: sparkbaas
+      middlewares:
+        - security-headers
+
+  services:
+    # Dashboard/admin UI service
+    admin:
+      loadBalancer:
+        servers:
+          - url: "http://admin"
+    
+    # Platform status page
+    status:
+      loadBalancer:
+        servers:
+          - url: "http://traefik:8080/ping"

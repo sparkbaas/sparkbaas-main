@@ -1,0 +1,11 @@
+# SparkBaaS Security Scanning Schedule
+# minute hour day month weekday command
+
+# Daily quick scan at 3:00 AM
+0 3 * * * /scan-scripts/run-security-scan.sh --quick >> /results/security-scan.log 2>&1
+
+# Weekly full scan on Saturdays at 4:00 AM
+0 4 * * 6 /scan-scripts/run-security-scan.sh --full >> /results/security-scan-full.log 2>&1
+
+# Monthly comprehensive scan on the 1st at 2:00 AM
+0 2 1 * * /scan-scripts/run-security-scan.sh --comprehensive >> /results/security-scan-comprehensive.log 2>&1

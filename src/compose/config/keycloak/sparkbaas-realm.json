@@ -1,0 +1,158 @@
+{
+  "realm": "sparkbaas",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginTheme": "keycloak",
+  "accessTokenLifespan": 300,
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrator role with full access"
+      },
+      {
+        "name": "developer",
+        "description": "Developer with function and API access"
+      },
+      {
+        "name": "user",
+        "description": "Basic user with application access"
+      },
+      {
+        "name": "api",
+        "description": "API access only"
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "admin@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "sparkbaas",
+          "temporary": true
+        }
+      ],
+      "realmRoles": ["admin", "developer", "user"]
+    },
+    {
+      "username": "developer",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Developer",
+      "lastName": "User",
+      "email": "developer@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "sparkbaas",
+          "temporary": true
+        }
+      ],
+      "realmRoles": ["developer", "user"]
+    },
+    {
+      "username": "user",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Regular",
+      "lastName": "User",
+      "email": "user@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "sparkbaas",
+          "temporary": true
+        }
+      ],
+      "realmRoles": ["user"]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "sparkbaas-api",
+      "name": "SparkBaaS API Client",
+      "description": "Client for API access",
+      "rootUrl": "https://api.${HOST_DOMAIN:-localhost}",
+      "adminUrl": "https://api.${HOST_DOMAIN:-localhost}",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "api-secret",
+      "redirectUris": [
+        "https://api.${HOST_DOMAIN:-localhost}/*"
+      ],
+      "webOrigins": [
+        "+"
+      ],
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "attributes": {
+        "access.token.lifespan": 3600
+      }
+    },
+    {
+      "clientId": "sparkbaas-admin",
+      "name": "SparkBaaS Admin UI",
+      "description": "Client for Admin UI",
+      "rootUrl": "https://admin.${HOST_DOMAIN:-localhost}",
+      "adminUrl": "https://admin.${HOST_DOMAIN:-localhost}",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "admin-secret",
+      "redirectUris": [
+        "https://admin.${HOST_DOMAIN:-localhost}/*"
+      ],
+      "webOrigins": [
+        "+"
+      ],
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "attributes": {
+        "access.token.lifespan": 1800
+      }
+    },
+    {
+      "clientId": "sparkbaas-functions",
+      "name": "SparkBaaS Functions",
+      "description": "Client for Functions Service",
+      "rootUrl": "https://functions.${HOST_DOMAIN:-localhost}",
+      "adminUrl": "https://functions.${HOST_DOMAIN:-localhost}",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "functions-secret",
+      "redirectUris": [
+        "https://functions.${HOST_DOMAIN:-localhost}/*"
+      ],
+      "webOrigins": [
+        "+"
+      ],
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "attributes": {
+        "access.token.lifespan": 3600
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# SparkBaaS Backup Crontab
+# minute hour day month weekday command
+
+# Daily backup at 2:00 AM
+0 2 * * * /backup.sh >> /backups/backup.log 2>&1
+
+# Weekly full backup on Sundays at 3:00 AM
+0 3 * * 0 RETENTION_DAYS=30 /backup.sh >> /backups/backup-weekly.log 2>&1
+
+# Monthly backup on the 1st of each month at 4:00 AM
+0 4 1 * * RETENTION_DAYS=180 /backup.sh >> /backups/backup-monthly.log 2>&1
