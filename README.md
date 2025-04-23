@@ -2,7 +2,7 @@
 
 SparkBaaS is a turnkey, self-hosted Backend as a Service (BaaS) platform that combines battle-tested open-source components into a cohesive, easy-to-deploy package. Inspired by Supabase, but designed with DevOps-first principles, SparkBaaS provides you with database, authentication, API gateway, and serverless functions in one simple deployment.
 
-![SparkBaaS Logo](https://via.placeholder.com/800x200?text=SparkBaaS)
+![SparkBaaS Logo](https://avatars.githubusercontent.com/u/208844014?s=48&v=4)
 
 ## Features
 
